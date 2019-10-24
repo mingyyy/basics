@@ -58,9 +58,48 @@ inorder_tree(root)
 print('postorder')
 postorder_tree(root)
 
+
 class MinHeap:
-    def insert(self):
+    # represent the Heap as a list (breath first)
+    # due to the completeness, the parent(p) of a left note (2p), the right node (2p+1)
+
+    def __init__(self):
+        self.heaplist = [0]
+        self.currentsize = 0
+
+    def percUp(self, pos):
+        while pos > 1:
+            parent = self.heaplist[pos//2]
+            if parent > self.heaplist[pos]:
+                self.heaplist[pos // 2] = self.heaplist[pos]
+                self.heaplist[pos] = parent
+            else:
+                pos = 1
+            pos = pos // 2
+
+    def insert(self, new):
         # start from right most bottom
+        self.heaplist.append(new)
+        self.currentsize += 1
+        self.percUp(self.currentsize)
+
+    def minChild(self, node):
+        if not node:
+            return None
+        else:
+            if node.left and node.right:
+                return min(node.left, node.right)
+            elif node.left:
+                return node.left
+            elif node.right:
+                return node.right
+
+    def percDown(self, pos):
         pass
+
     def extract_min(self):
-        pass
+        root = self.heaplist[1]
+        self.heaplist[1] = self.heaplist[self.currentsize]
+
+
+
