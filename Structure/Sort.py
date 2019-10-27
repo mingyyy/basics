@@ -110,6 +110,7 @@ def quick_sort(array): # TODO
 
 
 def counting_sort(array):
+    # useful if the range of numbers in the list is small
     n=10
     count_list = [0]*n
     for i in array:
@@ -120,7 +121,7 @@ def counting_sort(array):
     while i < n:
         count_list[i] += count_list[i-1]
         i += 1
-    print(count_list)
+    # print(count_list)
     ll = [0]*len(array)
     for i in array:
         count_list[i] -= 1
@@ -128,12 +129,52 @@ def counting_sort(array):
     return ll
 
 
-def redix_sort(array):
-    pass
-
-
+from math import floor
 def bucket_sort(array):
-    pass
+    # create n buckets
+    n = 10
+    bucket = [0]*n
+    for i in range(len(array)):
+        j = floor(array[i]*n)
+        if bucket[j] != 0:
+            bucket[j].append(array[i])
+        else:
+            bucket[j] = [array[i]]
+    array = []
+    for x in bucket:
+        if x !=0:
+            x=insert_sort(x)
+            for i in x:
+                array.append(i)
+    return array
+
+
+
+def redix_sort(array):
+    # only for numbers, starting from the smallest digits to the largest
+    # each stage use counting sort
+    def get_pos_nums(num):
+        pos_nums = []
+        while num != 0:
+            pos_nums.append(num % 10)
+            num = num // 10
+        return pos_nums
+
+    def get_pos_nums2(num, i):
+        if i > len(str(num)):
+            return False
+        else:
+            return int(str(num)[i])
+
+    temp = []
+    pos = []
+    for i in array:
+        # get one's position
+        pos.append(get_pos_nums2(i, -1))
+    print(pos)
+    # TODO need to modify counting_sort to handle list of list
+    pos = counting_sort(pos)
+
 
 
 if __name__ == '__main__':
@@ -142,4 +183,6 @@ if __name__ == '__main__':
     # print(insert_sort([]))
     # print(bubble_short([37,2,901,5]))
     # print(quick_sort([37, 2, 901, 5, 10,11]))
-    print(counting_sort([2,0,4,5,8,0,7,5]))
+    # print(counting_sort([2,0,4,5,8,0,7,5]))
+    # print(bucket_sort([0.21, 0.3, 0.4, .55, .48, 0.27, .75, .85]))
+    print(redix_sort([37, 23, 901, 500, 10, 119]))
