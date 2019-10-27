@@ -67,11 +67,12 @@ def merge_sort(array):
         right = merge_sort(array[right_start, right_end + 1])
         merge(left, right)
 
-def merge(array_left, array_right):
+
+def merge(array_left, array_right): # TODO
     l = []
     nl = len(array_left)
     nr = len(array_right)
-    if nl
+
     for i in array_left:
 
         for j in array_right:
@@ -80,8 +81,65 @@ def merge(array_left, array_right):
             else:
                 l.append(i)
 
-# print(bubble_short([37,2,901,5,10]))
-# print(selection_sort([3,1]))
-# print(insert_sort([]))
+import random
+def quick_sort(array): # TODO
+    # def swap(array, i, j):
+    #     array[i], array[j]=array[j], array[i]
 
-# print(bubble_short([37,2,901,5]))
+    def sorting(array, pivot_i):
+        left, right = pivot_i, 0
+        counter = 0
+        for i in range(0, len(array)):
+            if array[i] <= array[pivot_i]:
+                left = i
+            else:
+                right = i
+
+            if left > right and array[left]<array[right]:
+                array[left], array[right]=array[right], array[left]
+                left, right = right, left
+                counter += 1
+        return counter
+    counter = 1
+    i=1
+    while counter > 0:
+        pivot_i = random.choice([0,1,2,3,4])
+        counter = sorting(array, pivot_i)
+        i += 1
+    return array
+
+
+def counting_sort(array):
+    n=10
+    count_list = [0]*n
+    for i in array:
+        count_list[i] += 1
+
+    # accumulate
+    i=1
+    while i < n:
+        count_list[i] += count_list[i-1]
+        i += 1
+    print(count_list)
+    ll = [0]*len(array)
+    for i in array:
+        count_list[i] -= 1
+        ll[count_list[i]] = i
+    return ll
+
+
+def redix_sort(array):
+    pass
+
+
+def bucket_sort(array):
+    pass
+
+
+if __name__ == '__main__':
+    # print(bubble_sort([37,2,901,5,10]))
+    # print(selection_sort([3,1]))
+    # print(insert_sort([]))
+    # print(bubble_short([37,2,901,5]))
+    # print(quick_sort([37, 2, 901, 5, 10,11]))
+    print(counting_sort([2,0,4,5,8,0,7,5]))
