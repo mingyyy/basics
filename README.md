@@ -27,3 +27,18 @@
     
 5. Recursion & Dynamic programming
     - Top-Down Dynamic Programming (or Memoization)
+
+
+6. Sorting
+    - Bubble sort
+    - Insert sort (start from 1 and compare with left, insert item 1 to the right place; move down to item 2 do the same until the end)
+    - Selection sort(start from 0 and moving down find the lowest, swap with 0. move to 1, moving down again and swap with the lowest...)
+    - Merge sort
+    - Quick sort(pivot and swap)
+    - Bucket sort(extra space, into buckets based on number, then sort the list using insert )
+    - Counting sort(extra space, for small range of numbers)
+    - Radix sort(from first digit to last, using counting sort)
+    - External sort
+    - Tim sort
+    - Heap sort
+    
