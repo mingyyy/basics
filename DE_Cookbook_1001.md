@@ -12,12 +12,24 @@ this document. I still need to sort them accordingly.
 According to PostgreSQL v.9 documentation, an SQL Window function performs a calculation across a set of table rows that are somehow related to the current row, in a way similar to aggregate functions.
 A window function call always contains an OVER clause.
 
--   *What is a stored procedure?*
+-   *What is a stored procedure? Why would you use them?*
 
--   Why would you use them?
+A stored procedure is a prepared SQL code that you can save, so the code can be reused over and over again.
 
--   What are atomic attributes?
+So if you have an SQL query that you write over and over again, save it as a stored procedure, and then just call it to execute it.
 
+You can also pass parameters to a stored procedure, so that the stored procedure can act based on the parameter value(s) that is passed.
+```
+CREATE PROCEDURE SelectAllCustomers @City nvarchar(30)
+AS
+SELECT * FROM Customers WHERE City = @City
+GO;
+```
+
+-   *What are atomic attributes?*
+
+An attribute that cannot be divided further into meaningful subcomponents/sub-attributes is an Atomic attribute.
+for example: First_name, last_name, gender of a person, year, door number etc...
 -   *Explain ACID props of a database*
 
 *Atomicity* means that either the entire transaction takes place at once or doesn’t happen at all. There is no midway i.e. transactions do not occur partially. 
@@ -62,11 +74,14 @@ Use UNION ALL instead of UNION, if possible, as it is much more efficient.
 
 -   *What are the different types of JOIN (CROSS, INNER, OUTER)?*
 
+![sqljoins](pic/venndiagram1_joins.pdf)
+
+
 -   *What is the difference between Clustered Index and Non-Clustered
     Index - with examples?*
   
     
-*Clustered Index*
+-- *Clustered Index*
 
 Only one per table
 
@@ -74,7 +89,7 @@ Faster to read than non clustered as data is physically stored in index order
 
 In an RDBMS, usually, the primary key allows you to create a clustered index based on that specific column.
  
-*Non Clustered Index*
+-- *Non Clustered Index*
 
 Can be used many times per table
 
@@ -82,48 +97,154 @@ Quicker for insert and update operations than a clustered index
 Both types of index will improve performance when select data with fields that use the index but will slow down update and insert operations.
 
 Because of the slower insert and update clustered indexes should be set on a field that is normally incremental ie Id or Timestamp.
+```
+CREATE [NONCLUSTERED] INDEX index_name
+ON table_name(column_list);
+```
+
 
 ### The Cloud
 
 -   What is serverless?
 
+Serverless architecture (also known as serverless computing or function as a service, FaaS) is a software design pattern where applications are hosted by a third-party service, eliminating the need for server software and hardware management by the developer. 
+Applications are broken up into individual functions that can be invoked and scaled individually.
+
+Serverless computing (or serverless for short), is an execution model where the cloud provider (AWS, Azure, or Google Cloud) is responsible for executing a piece of code by dynamically allocating the resources. 
+And only charging for the amount of resources used to run the code. The code is typically run inside stateless containers that can be triggered by a variety of events including http requests, database events, queuing services, monitoring alerts, file uploads, scheduled events (cron jobs), etc. 
+The code that is sent to the cloud provider for execution is usually in the form of a function. Hence serverless is sometimes referred to as “Functions as a Service” or “FaaS”.
+e.g. AWS Lambda
+
+You should especially consider using a serverless provider if you have a small number of functions that you need hosted. If your application is more complex, a serverless architecture can still be beneficial, but you will need to architect your application very differently. 
+
 -   What is the difference between IaaS, PaaS and SaaS?
+
+![IPS_compare](pic/saas-vs-paas-vs-iaas.png)
+
+a) Infrastructure as a Service (IaaS) : It provides only a base infrastructure (Virtual machine, Software Define Network, Storage attached). End user have to configure and manage platform and environment, deploy applications on it.
+AWS (EC2), GCP (CE), Microsoft Azure (VM) are examples of Iaas.
+
+b) Platform as a Service (PaaS): It provides a platform allowing end user to develop, run, and manage applications without the complexity of building and maintaining the infrastructure.
+Google App Engine, CloudFoundry, Heroku, AWS (Beanstalk) are some examples of PaaS.
+
+c) Software as a Service (SaaS) : It is sometimes called to as “on-demand software”. Typically accessed by users using a thin client via a web browser. In SaaS everything can be managed by vendors: applications, runtime, data, middleware, OSes, virtualization, servers, storage and networking, End users have to use it.
+GMAIL is Best example of SaaS. Google team managing everything just we have to use the application through any of client or in browsers. Other examples SAP, Salesforce .
+
+d) Container as a Service (CaaS): Is a form of container-based virtualization in which container engines, orchestration and the underlying compute resources are delivered to users as a service from a cloud provider.
+Google Container Engine(GKE), AWS (ECS), Azure (ACS) and Pivotal (PKS) are some examples of CaaS.
+
+e) Function as a Service (FaaS): It provides a platform allowing customers to develop, run, and manage application functionalities without the complexity of building and maintaining the infrastructure.
+AWS (Lamda), Google Cloud Function are some examples of Faas
+
+https://brainhub.eu/blog/cloud-architecture-saas-faas-xaas/
+
+- *What's the difference between PaaS and FaaS?*
+
+PaaS, or Platform as a Service, products such as Heroku, Azure Web Apps and AWS Elastic Beanstalk offer many of the same benefits as Serverless (sometimes called Function as a Service or FaaS). They do eliminate the need for management of server hardware and software. The primary difference is in the way you compose and deploy your application, and therefore the scalability of your application.
+
+With PaaS, your application is deployed as a single unit and is developed in the traditional way using some kind of web framework like ASP.NET, Flask, Ruby on Rails, Java Servlets, etc. Scaling is only done at the entire application level. You can decide to run multiple instances of your application to handle additional load.
+
+With FaaS, you compose your application into individual, autonomous functions. Each function is hosted by the FaaS provider and can be scaled automatically as function call frequency increases or decreases. This turns out to be a very cost effective way of paying for compute resources. You only pay for the times that your functions get called, rather than paying to have your application always on and waiting for requests on so many different instances.
 
 -   How do you move from the ingest layer to the Cosumption layer? (In
     Serverless)
+    
+https://www.xenonstack.com/blog/big-data-ingestion/
 
--   What is edge computing?
+-   *What is edge computing?*
 
--   What is the difference between cloud and edge and on-premise?
+Edge computing is a distributed computing paradigm which brings computation and data storage closer to the location where it is needed, to improve response times and save bandwidth
+
+Edge computing is the practice of processing data near the edge of your network, where the data is being generated, instead of in a centralized data-processing warehouse.
+-   *What is the difference between cloud and edge and on-premise?*
+
+Cloud computing is basically using a remote server for management, storage, and processing of the data.
+
+In cloud computing, the data is sent to the cloud and located at a great distance from the point of origin. 
+The cloud then processes this action and the data is pulled down from the cloud by the customers as and when needed.
+
+Edge computing is often referred to as "on-premise." A computing topology in which information processing power, data collection, and delivery are moved closer to the edge of the device. Instead of housing processing power in a cloud or a centralized data center, data processing occurs in multiple small data centers located at or near the source. 
+The main purpose of edge computing is to push the data as close to the actual device as possible, thus reducing traffic and latency.
 
 ### Linux
 
 -   What is crontab?
 
+The software utility cron is a time-based job scheduler in Unix-like computer operating systems. 
+
+Cron is driven by a crontab (cron table) file, a configuration file that specifies shell commands to run periodically on a given schedule. The crontab files are stored where the lists of jobs and other instructions to the cron daemon are kept.
+
+
 ### Big Data
 
 -   What are the 4 V's?
 
+![10Vs](pic/10-vs-of-big-data.png)
+1. volume: size of data
+2. velocity: the speed at which data is generated
+3. variety: different type of data
+4. veracity: accuracy of data
+
+
 -   Which one is most important?
 
+depends
 ### Kafka
 
--   What is a topic?
+-   *What is a topic?*
 
--   How to ensure FIFO?
+message feeds
+-   *What is a producer?*
 
--   How do you know if all messages in a topic have been fully consumed?
+processes publishing to kafka topics
 
--   What are brokers?
+-  *What are consumers/consumer groups?*
 
--   What are consumergroups?
+processes subscribing to kafka topics
+-   *How to ensure FIFO?*
 
--   What is a producer?
+topics can be divided into multiple partitions;
+each partition is an in-order(FIFO) message queue.
+partitions enable parallelism. 
+
+kafka fault-tolerance occurs at the paritiion level
+1. user configurable replication factor
+2. each partition is replicated across that many brokers (nodes)
+3. replicas designated as leaders or followers
+4. leaders are load-balanced across cluster
+
+-   *How do you know if all messages in a topic have been fully consumed?*
+
+
+-   *What are brokers?*
+
+nodes in a kafka cluster
+
+-   *What are consumer groups?*
+
+Consumer group is a multi-threaded or multi-machine consumption from Kafka topics.
+
+Consumers can join a group by using the same `group.id`.
+
+The maximum parallelism of a group is that the number of consumers in the group ← no of partitions.
+
+Kafka assigns the partitions of a topic to the consumer in a group, so that each partition is consumed by exactly one consumer in the group.
+
+Kafka guarantees that a message is only ever read by a single consumer in the group.
+
+Consumers can see the message in the order they were stored in the log.
+
+
+**Alternatives: Amazon kinesis, apache Flume(HDFS), Apache Pulsar**
 
 ### Coding
 
 -   What is the difference between an object and a class?
 
+*A class is a template for objects.* A class defines object properties including a valid range of values, and a default value. 
+A class also describes object behavior. 
+
+An object is a member or an "instance" of a class. An object has a state in which all of its properties have values that you either explicitly define or that are defined by default settings.
 -   Explain immutability
 
 -   What are AWS Lambda functions and why would you use them?
@@ -148,13 +269,54 @@ Because of the slower insert and update clustered indexes should be set on a fie
 
 -   Difference between Redshift and Snowflake
 
+Amazon Redshift is a fully managed, petabyte-scale data warehouse service in the cloud. We use Amazon Redshift to load the data and run queries on the data.
+built on top of Postgres
+column-first and cluster-based, support query data from S3 directly, compatible with other AWS products.
+
+Snowflake is a datawarehouse built on top of AWS or Microsoft Azure cloud platform.
+Three layers architecture:
+1. The database **storage layer** holds all data loaded into Snowflake, including structured and semistructured data.
+2. The **compute layer** is made up of virtual warehouses that execute data processing tasks required for queries.
+3. The **cloud services layer** uses ANSI SQL and coordinates the entire system.
+
+Storage and support for structured and semistructured data
+
+Snowflake automatically optimizes how the data is stored and queried.
+
+
+*Similarities between the two*
+
+Both Redshift and Snowflake leverage columnar storage
+
+massively parallel processing (MPP) for simultaneous computation, enabling advanced analytics and saving significant time on sizable jobs.
+
+AWS platform
+
+On-demand pricing: pay as you go
+
 ### Hadoop
 
--   What file formats can you use in Hadoop?
+-   *What file formats can you use in Hadoop?*
 
--   What is the difference between a name and a datanode?
+-   *What is the difference between a name and a datanode?*
 
--   What is HDFS?
+-   *What is HDFS?*
+
+HDFS is a Java-based file system that provides scalable and reliable data storage, and it was designed to span large clusters of commodity servers.
+
+HDFS holds a huge amount of data and provides easier access.
+
+To store such massive data, the files are stored on multiple machines. These files are stored redundantly to rescue the system from possible data losses in case of failure.
+
+HDFS also makes applications available for parallel processing. HDFS is built to support applications with large data sets, including individual files that reach into the terabytes.
+
+It uses a **master/slave architecture**, with each cluster consisting of a single **NameNode** that manages file system operations and supporting **DataNodes** that manage data storage on individual compute nodes.
+
+When HDFS takes in data, it breaks the information down into separate pieces and distributes them to different nodes in a cluster, allowing for **parallel processing**.
+
+The file system also **copies** each piece of data multiple times and distributes the copies to individual nodes, placing at least one copy on a different server rack
+
+HDFS and YARN from the data management layer of Apache Hadoop.
 
 -   What is the purpose of YARN?
 
@@ -170,79 +332,119 @@ Because of the slower insert and update clustered indexes should be set on a fie
 
 ### Python
 
--   Difference between list tuples and dictionary
+-   Difference between list, tuples and dictionary
+1. list is mutable, ordered array can contain any type of objects
+2. tuples are immutable ordered sequences of objects, can contain any type of objects
+3. dictionary is a hash table, key-value pair, mutable and unordered
+4. Sets are mutable unordered sequence of unique elements whereas frozensets are immutable sets.
 
+
+Double-ended queues, or deques, can be useful when you need to remove elements in the order in which they were added.
 ### Data Warehouse & Data Lake
+https://www.xenonstack.com/blog/big-data-ingestion/
 
--   What is a data lake?
+-   *What is a data lake?*
 
--   What is a data warehouse?
+It is a new type of **cloud-based** enterprise architecture that structures data in a more scalable way that makes it easier to experiment with it.
 
--   Are there data lake warehouses?
+With a data lake, incoming data goes into the lake in a **raw form** or whatever form data source providers, and there we select and organize the data in a raw form. There are no assumptions about the schema of the data; each data source can use whatever scheme it likes.
 
--   Two data lakes within single warehouse?
+It’s up to the consumers of that information to make sense of that data for their purposes. The idea is to have a single store for all of the raw data that anyone in an organization might need to analyze.
 
--   What is a data mart?
+To capture and store raw data at scale for a low cost
 
--   What is a slow changing dimension (types)?
+To store many types of data in the same repository
 
--   What is a surrogate key and why use them?
+To perform transformations on the data
+
+To define the structure of the data at the time, it is used, referred to as schema
+
+-   *What is a data warehouse?*
+
+A Data Warehouse is a subject-oriented, Integrated, Time-varying, non-volatile collection of data in support of management’s decision-making process.
+
+So, a Data Warehouse is a centralized repository that stores data from multiple information sources and transforms them into a standard, multidimensional data model for efficient querying and analysis.
+
+-  *Data lake Vs. Data Warehouse*
+
+With Data Lake incoming data goes into the lake in the raw form and then, we select and organize the data in a raw form. 
+In Data Warehouse Data is cleaned and organized into single consistent schema before putting them into a warehouse and then the analysis is done on the warehouse data.
+
+Data lakes retain all data. Not only the data that is in use but also data that it might use in the future. 
+On the other hand, when a data warehouse is being developed, considerable time is spent in analyzing different data sources, along with understanding business processes and profiling of data. 
+Data is kept in its raw form and is only transformed when it is ready to be used.
+
+In Data Lake all data in a data lake is stored in its natural form. 
+Also, the data is always accessible to someone in need of it. In Data Warehouses difficulty faced when trying to induce a change in them. 
+A lot of time is spent during development to get the structure of the warehouse right. 
+Although a good warehouse design is capable of adapting to change.
+
+-   *Are there data lake warehouses?*
+
+
+-   *Two data lakes within single warehouse?*
+
+-   *What is a data mart?*
+
+-   *What is a slow changing dimension (types)?*
+
+-   *What is a surrogate key and why use them?*
 
 ### APIs (REST)
 
--   What does REST mean?
+-   *What does REST mean?*
 
 REST is acronym for REpresentational State Transfer. 
 It is architectural style for distributed hypermedia systems and was first presented by Roy Fielding in 2000
 
 Guiding Principles of REST
+1. Client-Server: There should be a separation between the server that offers a service, and the client that consumes it.
+2. Stateless: Each request from a client must contain all the information required by the server to carry out the request. In other words, the server cannot store information provided by the client in one request and use it in another request.
+3. Cacheable: The server must indicate to the client if requests can be cached or not.
+4. Layered System: Communication between a client and a server should be standardized in such a way that allows intermediaries to respond to requests instead of the end server, without the client having to do anything different.
+5. Uniform Interface: The method of communication between a client and a server must be uniform.
+6. Code on demand: Servers can provide executable code or scripts for clients to execute in their context. This constraint is the only one that is optional.
 
-Client–server – By separating the user interface concerns from the data storage concerns, we improve the portability of the user interface across multiple platforms and improve scalability by simplifying the server components.
-Stateless – Each request from client to server must contain all of the information necessary to understand the request, and cannot take advantage of any stored context on the server. Session state is therefore kept entirely on the client.
-Cacheable – Cache constraints require that the data within a response to a request be implicitly or explicitly labeled as cacheable or non-cacheable. If a response is cacheable, then a client cache is given the right to reuse that response data for later, equivalent requests.
-Uniform interface – By applying the software engineering principle of generality to the component interface, the overall system architecture is simplified and the visibility of interactions is improved. In order to obtain a uniform interface, multiple architectural constraints are needed to guide the behavior of components. REST is defined by four interface constraints: identification of resources; manipulation of resources through representations; self-descriptive messages; and, hypermedia as the engine of application state.
-Layered system – The layered system style allows an architecture to be composed of hierarchical layers by constraining component behavior such that each component cannot “see” beyond the immediate layer with which they are interacting.
-Code on demand (optional) – REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented.
+-   *What is idempotency?*
 
--   What is idempotency?
-
--   What are common REST API frameworks (Jersey and Spring)?
+-   *What are common REST API frameworks (Jersey and Spring)?*
 
 ### Apache Spark
 
--   What is an RDD?
+-   *What is an RDD?*
 
 RDD (Resilient Distributed Dataset) is the fundamental data structure of Apache Spark which are an immutable collection of objects which computes on the different node of the cluster. 
 Each and every dataset in Spark RDD is logically partitioned across many servers so that they can be computed on different nodes of the cluster.
 
--   What is a dataframe?
+-   *What is a dataframe?*
 
 A DataFrame is a distributed collection of data organized into named columns. 
 It is conceptually equal to a table in a relational database.
 
--   What is a dataset?
+-   *What is a dataset?*
 
 It is an extension of DataFrame API that provides the functionality of type-safe, 
 object-oriented programming interface of the RDD API and performance benefits of the Catalyst query optimizer and off heap storage mechanism of a DataFrame API.
 Only Scala and Java API supported.
 
--   How is a dataset typesafe?
+-   *How is a dataset typesafe?*
 
--   What is Parquet?
+-   *What is Parquet?*
 
 columnar file format, fast read (slower writing), compatible with Spark
 compressible well
 
--   What is Avro?
+-   *What is Avro?*
+
 row file format, 
 
--   Difference between Parquet and Avro
+-   *Difference between Parquet and Avro*
 
--   Tumbling Windows vs. Sliding Windows
+-   *Tumbling Windows vs. Sliding Windows*
 
--   Difference between batch and stream processing
+-   *Difference between batch and stream processing*
 
--   What are microbatches?
+-   *What are microbatches?*
 
 
 ### MapReduce
@@ -312,7 +514,18 @@ Guideline data protection rules?
 
 ### Apache Flink
 
--   What is Flink used for?
+Apache Flink is an open-source framework for distributed stream processing that Provides results that are accurate, even in the case of out-of-order or late-arriving data. Some of its features are –
+
+It is **stateful** and **fault-tolerant** and can seamlessly recover from failures while maintaining **exactly-once** application state.
+Performs at large scale, running on thousands of nodes with excellent throughput and latency characteristics.
+It’s streaming data flow execution engine, APIs and domain-specific libraries for Batch, Streaming, Machine Learning, and Graph Processing.
+
+-   *What is Flink used for?*
+
+1. Optimization of e-commerce search results in real-time
+2. Stream processing-as-a-service for data science teams
+3. Network/Sensor monitoring and error detection
+4. ETL for Business Intelligence Infrastructure
 
 -   Flink vs Spark?
 
