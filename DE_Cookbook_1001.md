@@ -80,7 +80,6 @@ Use UNION ALL instead of UNION, if possible, as it is much more efficient.
 -   *What is the difference between Clustered Index and Non-Clustered
     Index - with examples?*
   
-    
 -- *Clustered Index*
 
 Only one per table
@@ -102,6 +101,53 @@ CREATE [NONCLUSTERED] INDEX index_name
 ON table_name(column_list);
 ```
 
+- *Schema and 3 types of schemas*
+
+Definition: Design of a database is called the schema. Schema is of three types: Physical schema, logical schema and view schema.
+
+
+- *View and Temp tables*
+
+Views are a logical virtual table created by “select query” but the result is not stored anywhere in the disk and every time we need to fire the query when we need data, 
+so always we get updated or latest data from original tables.
+
+- *View and Materialized View*
+
+Views are a logical virtual table created by “select query” but the result is not stored anywhere in the disk and every time we need to fire the query when we need data, 
+so always we get updated or latest data from original tables.
+
+Materialized views are also the logical view of our data-driven by the select query but the result of the query will get stored in the table or disk, also the definition of the query will also store in the database.
+When we see the performance of Materialized view it is better than normal View because the data of materialized view will be stored in table and table may be indexed so faster for joining also joining is done at the time of materialized views refresh time so no need to every time fire join statement as in case of view.
+
+1) The first difference between View and materialized view is that In Views query result is not stored in the disk or database but Materialized view allow to store the query result in disk or table.
+2) Another difference between View vs materialized view is that, when we create a view using any table, rowid of view is same as the original table but in case of Materialized view rowid is different.
+3) One more difference between View and materialized view in the database is that In case of View we always get latest data but in case of Materialized view we need to refresh the view for getting latest data.
+4) Performance of View is less than Materialized view.
+5) This is continuation of first difference between View and Materialized View, In case of view its only the logical view of table no separate copy of table but in case of Materialized view we get physically separate copy of table.
+6) Last difference between View vs Materialized View is that In case of Materialized view we need an extra trigger or some automatic method so that we can keep MV refreshed, this is not required for views in the database.
+
+- *Truncate or Delete, what's the difference?*
+
+1. truncate is fast delete is slow.
+2. truncate doesn't do logging delete logs on per row basis.
+3. rollback is possible with delete not with truncate until specifically supported by the vendor.
+4. truncate doesn't fire trigger, delete does.
+5. Don't delete, truncate it when it comes to purge tables.
+6. truncate reset identity column in table if any, delete doesn't.
+7. truncate is DDL while delete is DML (use this when you are writing exam)
+8. truncate doesn't support where clause, delete does.
+
+Read more: https://javarevisited.blogspot.com/2011/10/how-to-use-truncate-and-delete-command.html#ixzz65NQl4af9
+
+- *Unique key or Primary key, what's the difference?*
+
+1) Unique key in a table can be null, at-least one but the primary key cannot be null in any table in a relational database like MySQL, Oracle etc.
+
+2) The primary key can be a combination of more than one unique keys in the same table.
+
+3) There can be only one primary key per table in relation database e.g. MySQL, Oracle or Sybase but there can be more than one unique key per table.
+
+4) The unique key is represented using unique constraint while a primary key is created using primary key constraint in any table and it's automatically got unique constraint.
 
 ### The Cloud
 
@@ -259,9 +305,10 @@ An object is a member or an "instance" of a class. An object has a state in whic
 
 ### NoSQL DBs
 
--   What is a key-value (rowstore) store?
+-   *What is a key-value (row store) store?*
 
--   What is a columnstore?
+A key-value store, or key-value database is a simple database that uses an associative array (think of a map or dictionary) as the fundamental data model where each key is associated with one and only one value in a collection. This relationship is referred to as a key-value pair.
+-   *What is a column store?*
 
 -   Diff between Row and col.store
 
@@ -363,7 +410,8 @@ To define the structure of the data at the time, it is used, referred to as sche
 
 A Data Warehouse is a subject-oriented, Integrated, Time-varying, non-volatile collection of data in support of management’s decision-making process.
 
-So, a Data Warehouse is a centralized repository that stores data from multiple information sources and transforms them into a standard, multidimensional data model for efficient querying and analysis.
+So, a Data Warehouse is a centralized repository that stores data from multiple information sources and transforms them into a standard, 
+multidimensional data model for efficient querying and analysis.
 
 -  *Data lake Vs. Data Warehouse*
 
@@ -371,7 +419,8 @@ With Data Lake incoming data goes into the lake in the raw form and then, we sel
 In Data Warehouse Data is cleaned and organized into single consistent schema before putting them into a warehouse and then the analysis is done on the warehouse data.
 
 Data lakes retain all data. Not only the data that is in use but also data that it might use in the future. 
-On the other hand, when a data warehouse is being developed, considerable time is spent in analyzing different data sources, along with understanding business processes and profiling of data. 
+On the other hand, when a data warehouse is being developed, considerable time is spent in analyzing different data sources, 
+along with understanding business processes and profiling of data. 
 Data is kept in its raw form and is only transformed when it is ready to be used.
 
 In Data Lake all data in a data lake is stored in its natural form. 
@@ -386,9 +435,53 @@ Although a good warehouse design is capable of adapting to change.
 
 -   *What is a data mart?*
 
+A data mart is a subject-oriented database that is often a partitioned segment of an enterprise data warehouse. 
+The subset of data held in a data mart typically aligns with a particular business unit like sales, finance, or marketing. 
+Data marts accelerate business processes by allowing access to relevant information in a data warehouse or operational data store within days, as opposed to months or longer. 
+Because a data mart only contains the data applicable to a certain business area, it is a cost-effective way to gain actionable insights quickly.
+
+Data marts and data warehouses are both highly structured repositories where data is stored and managed until it is needed. 
+However, they differ in the scope of data stored: data warehouses are built to serve as the central store of data for the entire business, 
+whereas a data mart fulfills the request of a specific division or business function.
+
+There are three types of data marts: dependent, independent, and hybrid. 
+They are categorized based on their relation to the data warehouse and the data sources that are used to create the system.
+
 -   *What is a slow changing dimension (types)?*
 
 -   *What is a surrogate key and why use them?*
+
+A **primary key** is a unique identifier given to a record in our database, 
+which we can use when querying the database or in order to join multiple sources. 
+
+A **natural key** is a key that has contextual or business meaning (for example, in a table containing STORE, SALES, and DATE, 
+we might use the DATE field as a natural key when joining with another table detailing inventory).
+
+A **surrogate key** is a key which does not have any contextual or business meaning. 
+It is manufactured “artificially” and only for the purposes of data analysis.
+ The most frequently used version of a surrogate key is an increasing sequential integer or “counter” value (i.e. 1, 2, 3). 
+ Surrogate keys can also include the current system date/time stamp, or a random alphanumeric string.
+
+Advantages of using surrogate keys:
+1. Surrogate keys are unique.
+2. Surrogate keys apply uniform rules to all records.
+3. Surrogate keys stand the test of time.
+4. Surrogate keys allow for unlimited values.
+
+-  *What are the two most common data warehouse models*
+
+The star schema and the snowflake schema are ways to organize data marts or entire data warehouses using relational databases. 
+Both of them use dimension tables to describe data aggregated in a fact table.
+The most obvious characteristic of the star schema is that dimension tables are not normalized.
+
+This snowflake schema stores exactly the same data as the star schema. 
+The fact table has the same dimensions as it does in the star schema example. 
+The most important difference is that the dimension tables in the snowflake schema are normalized. 
+Interestingly, the process of normalizing dimension tables is called snowflaking.
+
+The First Difference: Normalization
+The Second Difference: Query Complexity
+
 
 ### APIs (REST)
 
