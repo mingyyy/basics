@@ -17,7 +17,7 @@ def running_median(nums):
         else:
             node = heapq.heappop(right)
             heapq.heappush(left, -node)
-    if nums==[]:
+    if nums == []:
         return None
     elif len(nums) == 1:
         return nums[0]

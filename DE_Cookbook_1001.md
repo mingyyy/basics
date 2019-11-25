@@ -127,17 +127,23 @@ When we see the performance of Materialized view it is better than normal View b
 6) Last difference between View vs Materialized View is that In case of Materialized view we need an extra trigger or some automatic method so that we can keep MV refreshed, this is not required for views in the database.
 
 - *Truncate or Delete, what's the difference?*
-
+Delete can be used to remove all rows or only a subset of rows. 
+Truncate removes all rows.
 1. truncate is fast delete is slow.
 2. truncate doesn't do logging delete logs on per row basis.
 3. rollback is possible with delete not with truncate until specifically supported by the vendor.
 4. truncate doesn't fire trigger, delete does.
 5. Don't delete, truncate it when it comes to purge tables.
 6. truncate reset identity column in table if any, delete doesn't.
-7. truncate is DDL while delete is DML (use this when you are writing exam)
+7. truncate is DDL (data definition language) while delete is DML (data manipulation language).
+The basic *difference* between DDL and DML is that DDL (Data Definition Language) is used to Specify the database schema database structure. On the other hand, DML (Data Manipulation Language) is used to access, modify or retrieve the data from the database.
+
 8. truncate doesn't support where clause, delete does.
 
 Read more: https://javarevisited.blogspot.com/2011/10/how-to-use-truncate-and-delete-command.html#ixzz65NQl4af9
+
+https://stackoverflow.com/questions/139630/whats-the-difference-between-truncate-and-delete-in-sql
+
 
 - *Unique key or Primary key, what's the difference?*
 
@@ -148,6 +154,64 @@ Read more: https://javarevisited.blogspot.com/2011/10/how-to-use-truncate-and-de
 3) There can be only one primary key per table in relation database e.g. MySQL, Oracle or Sybase but there can be more than one unique key per table.
 
 4) The unique key is represented using unique constraint while a primary key is created using primary key constraint in any table and it's automatically got unique constraint.
+
+- *Sharding*
+
+refer to horizontal partitioning
+
+ 1. logical shards: smaller chunks
+ 2. physical shards: distributed to disk
+ 
+ 1. horizontal scaling (scaling out): adding more machines
+ 2. vertical scaling (scaling up): upgrade CPU & RAM
+ 
+**Drawbacks**
+ 
+The first difficulty that people encounter with sharding is the sheer complexity of properly implementing a sharded database architecture. 
+ 
+Another major drawback is that once a database has been sharded, it can be very difficult to return it to its unsharded architecture. 
+
+A final disadvantage to consider is that sharding isn’t natively supported by every database engine.
+
+*Key Based Sharding*
+
+Key based sharding, also known as hash based sharding, involves using a value taken from newly written data — such as a customer’s ID number, a client application’s IP address, a ZIP code, etc. — 
+and plugging it into a hash function to determine which shard the data should go to. 
+
+*Range Based Sharding*
+
+Range based sharding involves sharding data based on ranges of a given value. 
+
+*Directory Based Sharding*
+
+To implement directory based sharding, one must create and maintain a lookup table that uses a shard key to keep track of which shard holds which data.
+
+
+*database optimization before sharding*
+1. setting up a remote database
+2. implementing caching
+3. creating one or more read replicas
+4. upgrading to a larger server
+
+
+- *Snowflake architecture*
+1. storage layer, independent
+2. query processing layer - virtual warehouse (MPP compute clusters)
+3. cloud services layer: request, optimizer for query, metadata to optimize a query or to filter data
+
+- *Redshift*
+
+MPP (massively parallel processing)
+
+columnar storage
+
+compression
+
+Query from S3 Parquet files directly
+
+fully managed DB
+
+cluster upto 128 and 2PB
 
 ### The Cloud
 

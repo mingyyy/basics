@@ -58,7 +58,7 @@ boolean operation with other methods
 - `any()`
 - `all()`
 
-## Pandas
+# Pandas
 
 ### Construction
 `import pandas as pd`
@@ -80,7 +80,7 @@ boolean operation with other methods
 | slice of columns | `df.loc[:,"col1":"col4"]` | |
 | single row | `df.loc["row4"]` | |
 | list of rows | `df.loc[["row1", "row8"]]` | |
-| slice of rows | `df.loc["row3":"row5"]]` | `df.loc["row3":"row5"]` |
+| slice of rows | `df.loc["row3":"row5"]` | |
 
 *Series*
 
@@ -102,9 +102,7 @@ Filter dataframe on column names or row names (labels) by regrex or just item na
 
 `df.filter(items=['Age', 'Sex'])[:2]`
 
-- `set_index(['col_name1','col_name2'])`
-
-Set any column you want as index of df
+- `set_index(['col_name1','col_name2'])` Set any column you want as index of df
 
 - `reset_index()`
 Can reset index back to 0....n rows-1
@@ -137,12 +135,19 @@ Inner join
 Single row and single column are Series; while multi-row and multi-column are data frame.
 
 `series.value_counts()`
+
 `series.max()` - `df.max()`
+
 `series.min()` - `df.min()`
+
 `series.mean()` - `df.mean()`
+
 `series.median()` - `df.median()`
+
 `series.mode()` - `df.mode()`
+
 `series.sum()` - `df.sum()`
+
 `series.describe()` - `df.describe()`
 
 
