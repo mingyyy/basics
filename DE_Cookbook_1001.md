@@ -1,6 +1,32 @@
 All Interview Questions
 -----------------------
 
+### Table of content
+
+1. [SQL DBs](#SQL-DBs)
+2. [NoSQL DBs](#NoSQL-DBs) 
+3. [Linux](#Linux)
+4. [Big Data](#Big-Data)
+5. [Kafka](#Kafka)
+6. [Coding](#Coding)
+7. [The Cloud](#The-Cloud)
+8. [Hadoop](#Hadoop)
+9. [Python](#Python)
+10. [Lambda Architecture](#Lambda-Architecture)
+11. [APIs (REST)](#APIs-(REST))
+12. [Apache Spark](#apache-spark)
+13. [MapReduce](#mapreduce)
+14. [Docker & Kubernetes](#docker--kubernetes)
+15. [Data Pipelines](#data-pipelines)
+16. [Airflow](#Airflow)
+17. [Security/Privacy](#Security/Privacy)
+18. [Distributed Systems](#distributed-systems)
+19. [Apache Flink](#apache-flink)
+20. [GitHub](#github)
+21. [Dev/Ops](#dev/ops)
+22. [Development / Agile](#development--agile)
+23. [Misc](#misc)
+
 The interview questions are roughly structured like the sections in the
 \"Basic data engineering skills\" part. This makes it easier to navigate
 this document. I still need to sort them accordingly.
@@ -642,7 +668,7 @@ Directed Acyclic Graph
 
 -   How to branch?
 
-### DataVisualization
+### Data Visualization
 
 -   What is a BI tool?
 Business Intelligent tool
@@ -710,3 +736,30 @@ It’s streaming data flow execution engine, APIs and domain-specific libraries 
 -   What is OKR?
 
 -   What is Jira and what is it used for?
+
+
+### Misc
+- A *time-variant* system is a system whose output response depends on moment of observation as well as moment of input signal application. In other words, a time delay or time advance of input not only shifts the output signal in time but also changes other paramters and behavior.
+
+A system is called time invariant if its output , input characteristics dos not change with time. e.g.y(n)=x(n)+x(n-1) A system is called time variant if its input, output characteristics changes with time. e.g.y(n)=x(-n).
+
+- Data Mart Vs. Data Warehouse
+https://panoply.io/data-warehouse-guide/data-mart-vs-data-warehouse/
+
+Redshift Nodes: Leader Node 
+(receive a query and develop an execution plan, then feed back to client applications, Compute Node and Compute slices work in parallel to achieve better performance)
+1. Dense Storage
+2. Dense Compute
+depends on the following:
+    1. Quantity
+    2. Complexity of queries
+    3. downstream systems
+
+Why redshift?
+1. easier to set-up, deploy and manage than traditional DB
+2. scalability (single-node, multiple-node cluster to scale up and down)
+3. faster and better performance (MPP - clustering, columnar data storage)
+4. cost-effective compare with traditional (no upfront cost) 
+5. allows to query from data lake (data in different format. S3) using redshift spectrum
+6. backup & recovery (replica in S3)
+7. data encryption
