@@ -733,20 +733,40 @@ It’s streaming data flow execution engine, APIs and domain-specific libraries 
 
 -   What is Scrum?
 
+Scrum is a framework within which people can address complex adaptive problems, while productively and creatively delivering products of the highest possible value.
+Scrum itself is a simple framework for effective team collaboration on complex products.
+https://www.scrum.org/resources/what-is-scrum
+
+    - Lightweight
+    - Simple to understand
+    - Difficult to master
+
 -   What is OKR?
 
+The definition of “OKRs” is **“Objectives and Key Results.”** It is a collaborative goal-setting tool used by teams and individuals to set challenging, ambitious goals with measurable results. OKRs are how you track progress.
+
+An *Objective* is simply what is to be achieved, no more and no less. By definition, objectives are significant, concrete, action-oriented, and (ideally) inspirational. When properly designed and deployed, they’re a vaccine against fuzzy thinking—and fuzzy execution.
+
+*Key Results* benchmark and monitor how we get to the objective. Effective KRs are specific and time-bound, aggressive yet realistic. Most of all, they are measurable and verifiable. You either meet a key result’s requirements or you don’t; there is no gray area, no room for doubt. At the end of the designated period, typically a quarter, we do a regular check and grade the key results as fulfilled or not.
+
+Where an objective can be long-lived, rolled over for a year or longer, key results evolve as the work progresses. Once they are all completed, the objective is necessarily achieved.
+
 -   What is Jira and what is it used for?
+
+*JIRA* is a tool developed by Australian Company Atlassian. It is used for **bug tracking, issue tracking, and project management**. The name "JIRA" is actually inherited from the Japanese word "Gojira" which means "Godzilla". The basic use of this tool is to track issue and bugs related to your software and Mobile apps.
+
+Some common use cases include software development, feature implementation, bug tracking, agile project management (with JIRA Agile), and service desk ticket tracking (with JIRA Service Desk).
 
 
 ### Misc
 - A *time-variant* system is a system whose output response depends on moment of observation as well as moment of input signal application. In other words, a time delay or time advance of input not only shifts the output signal in time but also changes other paramters and behavior.
 
-A system is called time invariant if its output , input characteristics dos not change with time. e.g.y(n)=x(n)+x(n-1) A system is called time variant if its input, output characteristics changes with time. e.g.y(n)=x(-n).
+A system is called *time invariant* if its output , input characteristics dos not change with time. e.g.y(n)=x(n)+x(n-1) A system is called time variant if its input, output characteristics changes with time. e.g.y(n)=x(-n).
 
 - Data Mart Vs. Data Warehouse
 https://panoply.io/data-warehouse-guide/data-mart-vs-data-warehouse/
 
-Redshift Nodes: Leader Node 
+*Redshift* Nodes: Leader Node 
 (receive a query and develop an execution plan, then feed back to client applications, Compute Node and Compute slices work in parallel to achieve better performance)
 1. Dense Storage
 2. Dense Compute
