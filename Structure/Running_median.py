@@ -11,39 +11,49 @@ import heapq
 
 def running_median(nums):
     def balance(left, right):
-        if n_left>n_right:
+        if len(left) > len(right):
             node = -heapq.heappop(left)
             heapq.heappush(right, node)
         else:
             node = heapq.heappop(right)
             heapq.heappush(left, -node)
+
+    def addMedian(num, left, right):
+        if left==[] or  nums[i] < -left[0]:
+            heapq.heappush(left, -nums[i])
+        else:
+            heapq.heappush(right, nums[i])
+
+    def getMedian(left, right):
+        if len(nums) % 2 == 0:
+            median = (left[0] + right[0]) / 2
+        else:
+            if len(left) > len(right):
+                median = left[0]
+            else:
+                median = right[0]
+        return median
+
     if nums == []:
         return None
     elif len(nums) == 1:
         return nums[0]
-    left = heapq.heapify([])
-    right = heapq.heapify([])
-    i, n_left, n_right = 0, 0, 0
+    left = []
+    right = []
+    i = 0
+
+
     # construct heaps: maxHeap = left, minHeap = right
     while i < len(nums):
-        if left is None or -left[0] < nums[i]:
-            heapq.heappush(left, -nums[i])
-            n_left += 1
-        if right is None or right[0] < nums[i]:
-            heapq.heappush(right, nums[i])
-            n_right += 1
-        if abs(n_left - n_right) >= 2:
+        addMedian(nums[i], left, right)
+
+        if abs(len(left) - len(right)) >= 2:
             balance(left, right)
         i += 1
 
     # get median
-    if len(nums)%2 == 0:
-        median = (left[0] + right[0])/2
-    else:
-        if n_left>n_right:
-            median = left[0]
-        else:
-            median = right[0]
+    median = getMedian(left, right)
+
     return median
 
 
