@@ -26,31 +26,30 @@ def running_median(nums):
 
     def getMedian(left, right):
         if len(nums) % 2 == 0:
-            median = (left[0] + right[0]) / 2
+            median = (-left[0] + right[0]) / 2
         else:
             if len(left) > len(right):
-                median = left[0]
+                median = -left[0]
             else:
                 median = right[0]
         return median
+
 
     if nums == []:
         return None
     elif len(nums) == 1:
         return nums[0]
+    # construct heaps: maxHeap = left, minHeap = right
     left = []
     right = []
     i = 0
 
-
-    # construct heaps: maxHeap = left, minHeap = right
     while i < len(nums):
         addMedian(nums[i], left, right)
-
         if abs(len(left) - len(right)) >= 2:
             balance(left, right)
         i += 1
-
+        # print(left, right)
     # get median
     median = getMedian(left, right)
 
@@ -58,7 +57,7 @@ def running_median(nums):
 
 
 if __name__=='__main__':
-    print(running_median([2, 5, 7, 10, 1, 0, 8]))
+    print(running_median([1, 3, -5, 6, 8, 1]))
 
 
 
