@@ -1,7 +1,7 @@
-from counting import counting_sort
+from count import count_sort
 
 def redix_sort(array):
-    # only for numbers, starting from the smallest digits to the largest
+    # Only for numbers, starting from the least significant digits to the most
     # each stage use counting sort
     def get_pos_nums(num):
         pos_nums = []
@@ -12,7 +12,7 @@ def redix_sort(array):
 
     def get_pos_nums2(num, i):
         if i > len(str(num)):
-            return False
+            return 0
         else:
             return int(str(num)[i])
 
@@ -22,9 +22,28 @@ def redix_sort(array):
         # get one's position
         pos.append(get_pos_nums2(i, -1))
     print(pos)
-    # TODO need to modify counting_sort to handle list of list
-    pos = counting_sort(pos)
+    # TODO need to modify count_sort to handle list of list
+    pos = count_sort(pos)
+
+
+def radix_sort(array):
+    m = max(array)
+    i = 1
+    n = 0
+    # calculate the number of digits = n
+    while m/i >= 1:
+        n += 1
+        i *= 10
+        countSort(array, n)
+    return n
+
+
+def countSort(array, n):
+
+    pass
+
 
 
 if __name__ == '__main__':
-    print(redix_sort([37, 23, 901, 500, 10, 119]))
+    # print(redix_sort([37, 23, 901, 500, 10, 119]))
+    print(radix_sort([34,1,234]))
