@@ -1,36 +1,44 @@
-
 def merge_sort(array):
     # merge sort, breaking into halves ...
     # add to new list based on comparison
-    n = len(array)
-    if n <= 1:
-        return array
 
-    middle = n//2 - 1
-    left_start, left_end = 0, middle
-    right_start, right_end = left_end + 1, n-1
+    def mergeHalves(array, temp, leftStart, rightEnd):
+        leftEnd = (rightEnd + leftStart)//2
+        rightStart = leftEnd+1
 
-    while left_start==left_end and right_start==right_end:
-        left = merge_sort(array[left_start, left_end+1])
-        right = merge_sort(array[right_start, right_end + 1])
-        merge(left, right)
+        left = leftStart
+        right = rightStart
+        index = leftStart
+        while left <= leftEnd and right <= rightEnd:
+            if array[left] <= array[right]:
+                temp[index] = array[left]
+                left += 1
+            else:
+                temp[index] = array[right]
+                right += 1
+            index += 1
+        if left > leftEnd:
+            for i in range(right, rightEnd+1):
+                temp[index] = array[i]
+                index += 1
+        else:
+            for i in range(left, leftEnd+1):
+                temp[index] = array[i]
+                index += 1
 
+        for i in range(leftStart, rightEnd+1):
+            array[i] = temp[i]
+
+    def merge(array, temp, leftStart, rightEnd):
+        if leftStart >= rightEnd:
+            return array
+        middle = (leftStart + rightEnd)//2
+        merge(array, temp, leftStart, middle)
+        merge(array, temp, middle+1, rightEnd)
+        mergeHalves(array, temp, leftStart, rightEnd)
+
+    merge(array, [i for i in range(len(array))], 0, len(array) - 1)
     return array
 
-
-def merge(array_left, array_right): # TODO
-    l = []
-    nl = len(array_left)
-    nr = len(array_right)
-
-    for i in array_left:
-
-        for j in array_right:
-            if i > j:
-                l.append(j)
-            else:
-                l.append(i)
-
-
 if __name__ == '__main__':
-    print(merge_sort([37, 2, 901, 5, 10,11]))
+    print(merge_sort([37, 2, 91, 5, 3, 4, 1, 0, 100]))
