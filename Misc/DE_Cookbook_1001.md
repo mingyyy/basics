@@ -759,14 +759,16 @@ Some common use cases include software development, feature implementation, bug 
 
 
 ### Misc
-- A *time-variant* system is a system whose output response depends on moment of observation as well as moment of input signal application. In other words, a time delay or time advance of input not only shifts the output signal in time but also changes other paramters and behavior.
+-   A *time-variant* system is a system whose output response depends on moment of observation as well as moment of input signal application. In other words, a time delay or time advance of input not only shifts the output signal in time but also changes other paramters and behavior.
 
 A system is called *time invariant* if its output , input characteristics dos not change with time. e.g.y(n)=x(n)+x(n-1) A system is called time variant if its input, output characteristics changes with time. e.g.y(n)=x(-n).
 
-- Data Mart Vs. Data Warehouse
+-   Data Mart Vs. Data Warehouse
 https://panoply.io/data-warehouse-guide/data-mart-vs-data-warehouse/
 
-*Redshift* Nodes: Leader Node 
+-   *Redshift* 
+Nodes: 
+Leader Node 
 (receive a query and develop an execution plan, then feed back to client applications, Compute Node and Compute slices work in parallel to achieve better performance)
 1. Dense Storage
 2. Dense Compute
@@ -775,7 +777,7 @@ depends on the following:
     2. Complexity of queries
     3. downstream systems
 
-Why redshift?
+-   Why redshift?
 1. easier to set-up, deploy and manage than traditional DB
 2. scalability (single-node, multiple-node cluster to scale up and down)
 3. faster and better performance (MPP - clustering, columnar data storage)
@@ -783,3 +785,34 @@ Why redshift?
 5. allows to query from data lake (data in different format. S3) using redshift spectrum
 6. backup & recovery (replica in S3)
 7. data encryption
+
+
+-   What is software design pattern?
+A software design pattern is a general, *reusable* solution to a commonly occurring problem 
+within a given context in software design. 
+It is not a finished design that can be transformed directly into source or machine code. 
+It is a description or *template* for how to solve a problem that can be used in many different situations. 
+Design patterns are *formalized best practices* that the programmer can use to solve common problems 
+when designing an application or system.
+
+-   Four design principles of Data Engineering?
+1. Always start with design of Data set (input/output) and Data entities
+2. Separate business rules from processing logic. (modularization/metadata storage of business rules)
+3. Build exceptions from the beginning
+4. Easy to integrate using standard input and output
+
+-   What does Data Engineer do?
+
+Data engineers deal with raw data that contains human, machine or instrument errors. 
+So data engineers need to recommend and sometimes implement ways to improve data reliability, efficiency, and quality.
+Data engineers will need to ensure that the architecture that is in place supports the requirements of the data scientists and the stakeholders, the business.
+the data engineering team will need to develop data set processes for data modeling, mining, and production.
+
+
+-   What's the difference between Data Engineer(DE), Data Scientist(DS) and Data Analyst(DA)?
+
+The data engineer is someone who develops, constructs, tests and maintains architectures, such as databases and large-scale processing systems.
+ 
+The data scientist, on the other hand, is someone who cleans, massages, and organizes (big) data. 
+
+![DS_DE](../pic/DS_DE.png)
